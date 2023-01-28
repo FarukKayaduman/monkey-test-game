@@ -6,6 +6,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class GridManager : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class GridManager : MonoBehaviour
     [HideInInspector] public Dictionary<Vector3, Tile> tiles;
 
     private List<TextMeshProUGUI> tilesTextsList;
+    private List<Image> tilesImageList;
 
     private int numbersCount = 10;
 
@@ -85,8 +87,11 @@ public class GridManager : MonoBehaviour
 
             tiles.ElementAt(randomTile).Value.numberOnTileText = i + 1;
 
-            tilesTextsList[randomTile].gameObject.SetActive(true);
+            // tilesTextsList[randomTile].gameObject.SetActive(true);
             tilesTextsList[randomTile].text = (i + 1).ToString();
+            tilesImageList = tilesTextsList[randomTile].gameObject.transform.parent.gameObject
+                .GetComponentsInChildren<Image>().ToList();
+            tilesImageList[i].enabled = true;
         }
     }
 
@@ -94,7 +99,10 @@ public class GridManager : MonoBehaviour
     {
         if (tile.numberOnTileText == nextNumberToClick)
         {
-            tile.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "";
+            // tile.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "";
+            var allImages = tile.gameObject.GetComponentsInChildren<Image>().ToList();
+            var enabledImages = allImages.FindIndex(x => x.enabled);
+            allImages[enabledImages].enabled = false;
             score += 10;
             scoreText.text = score.ToString();
             nextNumberToClick++;

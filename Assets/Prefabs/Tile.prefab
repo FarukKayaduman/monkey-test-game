@@ -52,7 +52,17 @@ MonoBehaviour:
   offsetColor: {r: 0.20784314, g: 0.20784314, b: 0.20784314, a: 1}
   highlight: {fileID: 8792620211071406981}
   renderer: {fileID: 3327233302417237687}
-  tileNumber: 0
+  numberOnTileText: 0
+  imageOnTile:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!212 &3327233302417237687
 SpriteRenderer:
   m_ObjectHideFlags: 0
