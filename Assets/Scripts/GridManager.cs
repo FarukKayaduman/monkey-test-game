@@ -4,27 +4,39 @@ using System.Linq;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GridManager : MonoBehaviour
 {
+    public static GridManager Instance;
+
     [SerializeField] private int height;
     [SerializeField] private int width;
 
+    [SerializeField] private GameObject winPanel;
     [SerializeField] private Tile tilePrefab;
     [SerializeField] private Transform tilesParentTransform;
     [SerializeField] private Transform mainCameraTransform;
 
-    private Dictionary<Vector3, Tile> tiles;
+    [HideInInspector] public Dictionary<Vector3, Tile> tiles;
 
     private List<TextMeshProUGUI> tilesTextsList;
 
+    private int numbersCount = 10;
+
+    private int nextNumberToClick = 1;
+
     private void Start()
     {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
         GenerateTiles();
         tilesTextsList = tilesParentTransform.GetComponentsInChildren<TextMeshProUGUI>(true).ToList();
         
         ClearTileTexts();
-        GenerateRandomNumbers(10);
+        GenerateRandomNumbers(numbersCount);
     }
 
     private void GenerateTiles()
@@ -63,8 +75,23 @@ public class GridManager : MonoBehaviour
 
             numberedTileList.Add(randomTile);
 
+            tiles.ElementAt(randomTile).Value.numberOnTileText = i + 1;
+
             tilesTextsList[randomTile].gameObject.SetActive(true);
             tilesTextsList[randomTile].text = (i + 1).ToString();
+        }
+    }
+
+    public void OnTileButtonClicked(Tile tile)
+    {
+        if (tile.numberOnTileText == nextNumberToClick)
+        {
+            tile.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "";
+            nextNumberToClick++;
+        }
+        if(nextNumberToClick > numbersCount)
+        {
+            winPanel.SetActive(true);
         }
     }
 
@@ -83,5 +110,11 @@ public class GridManager : MonoBehaviour
         {
             tilesTextsList[i].text = "";
         }
+    }
+
+    public void OnRestartButtonClicked()
+    {
+        winPanel.SetActive(false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

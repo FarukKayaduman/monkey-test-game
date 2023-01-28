@@ -9,7 +9,9 @@ public class Tile : MonoBehaviour
 
     [SerializeField] private GameObject highlight;
 
-    [SerializeField] private SpriteRenderer renderer;
+    [SerializeField] private new SpriteRenderer renderer;
+
+    [HideInInspector] public int numberOnTileText;
 
     public void Init(bool isOffset)
     {
@@ -23,5 +25,11 @@ public class Tile : MonoBehaviour
     private void OnMouseExit()
     {
         highlight.SetActive(false);
+    }
+
+    public void OnMouseDown()
+    {
+        Tile thisTile = this;
+        GridManager.Instance.OnTileButtonClicked(thisTile);
     }
 }
