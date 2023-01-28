@@ -5,6 +5,7 @@ using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GridManager : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class GridManager : MonoBehaviour
 
     [SerializeField] private GameObject winPanel;
     [SerializeField] private Tile tilePrefab;
+
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI wrongCountText;
+
     [SerializeField] private Transform tilesParentTransform;
     [SerializeField] private Transform mainCameraTransform;
 
@@ -25,6 +30,9 @@ public class GridManager : MonoBehaviour
     private int numbersCount = 10;
 
     private int nextNumberToClick = 1;
+    
+    private int score;
+    private int wrongCount;
 
     private void Start()
     {
@@ -87,7 +95,17 @@ public class GridManager : MonoBehaviour
         if (tile.numberOnTileText == nextNumberToClick)
         {
             tile.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "";
+            score += 10;
+            scoreText.text = score.ToString();
             nextNumberToClick++;
+        }
+        else
+        {
+            score -= 5;
+            wrongCount++;
+
+            scoreText.text = score.ToString();
+            wrongCountText.text = wrongCount.ToString();
         }
         if(nextNumberToClick > numbersCount)
         {
@@ -114,6 +132,9 @@ public class GridManager : MonoBehaviour
 
     public void OnRestartButtonClicked()
     {
+        wrongCount = 0;
+        wrongCountText.text = "0";
+        scoreText.text = "0";
         winPanel.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
