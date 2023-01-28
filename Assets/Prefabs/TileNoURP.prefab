@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1254695351640013121}
-  - component: {fileID: 4979819250205783416}
+  - component: {fileID: 8456553931551858156}
   - component: {fileID: 3327233302417237687}
   - component: {fileID: 5059065126623031182}
   m_Layer: 0
-  m_Name: Tile
+  m_Name: TileNoURP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,7 +36,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4979819250205783416
+--- !u!114 &8456553931551858156
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,24 +45,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1254695351640013124}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd5504d69d7bf514cb246c7f22ccf078, type: 3}
+  m_Script: {fileID: 11500000, guid: 8da0e1d6295b233469f00a455c951e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseColor: {r: 0.14509805, g: 0.14509805, b: 0.14509805, a: 1}
-  offsetColor: {r: 0.20784314, g: 0.20784314, b: 0.20784314, a: 1}
+  baseColor: {r: 0, g: 0, b: 0, a: 0}
+  offsetColor: {r: 0, g: 0, b: 0, a: 0}
   highlight: {fileID: 8792620211071406981}
   renderer: {fileID: 3327233302417237687}
   numberOnTileText: 0
-  imageOnTile:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!212 &3327233302417237687
 SpriteRenderer:
   m_ObjectHideFlags: 0
