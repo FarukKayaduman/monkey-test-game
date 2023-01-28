@@ -7,10 +7,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 
-public class GridManager : MonoBehaviour
+public class GridManager : SingletonMB<GridManager>
 {
-    public static GridManager Instance;
-
     [SerializeField] private int height;
     [SerializeField] private int width;
 
@@ -20,6 +18,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI wrongCountText;
 
+    [SerializeField] private Transform canvasTransform;
     [SerializeField] private Transform tilesParentTransform;
     [SerializeField] private Transform mainCameraTransform;
 
@@ -27,24 +26,29 @@ public class GridManager : MonoBehaviour
 
     private List<TextMeshProUGUI> tilesTextsList;
 
-    private int numbersCount = 10;
+    private int numbersCount = 3;
 
     private int nextNumberToClick = 1;
     
     private int score;
     private int wrongCount;
 
+    private bool isGameStarted;
+
     private void Start()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-        }
+        score = 0;
+        wrongCount = 0;
+        wrongCountText.text = "0";
+        scoreText.text = "0";
+
         GenerateTiles();
         tilesTextsList = tilesParentTransform.GetComponentsInChildren<TextMeshProUGUI>(true).ToList();
         
         ClearTileTexts();
         GenerateRandomNumbers(numbersCount);
+
+        isGameStarted = true;
     }
 
     private void GenerateTiles()
@@ -92,12 +96,20 @@ public class GridManager : MonoBehaviour
 
     public void OnTileButtonClicked(Tile tile)
     {
+        if(!isGameStarted) return;
+
         if (tile.numberOnTileText == nextNumberToClick)
         {
             tile.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "";
             score += 10;
             scoreText.text = score.ToString();
             nextNumberToClick++;
+            
+            if (nextNumberToClick > numbersCount)
+            {
+                Instantiate(winPanel, canvasTransform);
+                isGameStarted = false;
+            }
         }
         else
         {
@@ -106,10 +118,6 @@ public class GridManager : MonoBehaviour
 
             scoreText.text = score.ToString();
             wrongCountText.text = wrongCount.ToString();
-        }
-        if(nextNumberToClick > numbersCount)
-        {
-            winPanel.SetActive(true);
         }
     }
 
@@ -132,10 +140,6 @@ public class GridManager : MonoBehaviour
 
     public void OnRestartButtonClicked()
     {
-        wrongCount = 0;
-        wrongCountText.text = "0";
-        scoreText.text = "0";
-        winPanel.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
