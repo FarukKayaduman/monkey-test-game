@@ -10,8 +10,9 @@ using UnityEngine.UI;
 
 public class GridManager : SingletonMB<GridManager>
 {
-    [SerializeField] private int height;
-    [SerializeField] private int width;
+    private int height;
+    private int width;
+    private int numbersCount;
 
     [SerializeField] private GameObject winPanel;
     [SerializeField] private Tile tilePrefab;
@@ -28,7 +29,6 @@ public class GridManager : SingletonMB<GridManager>
     private List<TextMeshProUGUI> tilesTextsList;
     private List<Image> tilesImageList;
 
-    private int numbersCount = 3;
 
     private int nextNumberToClick = 1;
     
@@ -43,6 +43,10 @@ public class GridManager : SingletonMB<GridManager>
         wrongCount = 0;
         wrongCountText.text = "0";
         scoreText.text = "0";
+
+        height = SettingsManager.height;
+        width = SettingsManager.width;
+        numbersCount = SettingsManager.numbersCount;
 
         GenerateTiles();
         tilesTextsList = tilesParentTransform.GetComponentsInChildren<TextMeshProUGUI>(true).ToList();
