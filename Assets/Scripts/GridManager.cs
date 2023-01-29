@@ -91,7 +91,6 @@ public class GridManager : SingletonMB<GridManager>
 
             tiles.ElementAt(randomTile).Value.numberOnTileText = i + 1;
 
-            // tilesTextsList[randomTile].gameObject.SetActive(true);
             tilesTextsList[randomTile].text = (i + 1).ToString();
             tilesImageList = tilesTextsList[randomTile].gameObject.transform.parent.gameObject
                 .GetComponentsInChildren<Image>().ToList();
@@ -105,7 +104,6 @@ public class GridManager : SingletonMB<GridManager>
 
         if (tile.numberOnTileText == nextNumberToClick)
         {
-            // tile.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "";
             var allImages = tile.gameObject.GetComponentsInChildren<Image>().ToList();
             var enabledImages = allImages.FindIndex(x => x.enabled);
             allImages[enabledImages].enabled = false;

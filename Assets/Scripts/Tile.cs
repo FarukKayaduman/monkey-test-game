@@ -28,6 +28,8 @@ public class Tile : MonoBehaviour
 
     public void OnMouseDown()
     {
+        var disableMouseClickCount = GameManager.Instance.lightsOutCount;
+        if (disableMouseClickCount > 0) return;
         Tile thisTile = this;
         GridManager.Instance.OnTileButtonClicked(thisTile);
     }
